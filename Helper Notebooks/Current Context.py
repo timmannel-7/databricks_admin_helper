@@ -1,11 +1,17 @@
 # Databricks notebook source
 # MAGIC %md
+# MAGIC ## Current Context Notebook
+# MAGIC > Use this to programmatically access information about your current environment.
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC ## Current User
 # MAGIC ---
 
 # COMMAND ----------
 
-# DBTITLE 1,Current User Name
+# DBTITLE 1,Current User
 # Get the current user name.
 userName = dbutils.entry_point.getDbutils().notebook().getContext().userName().get()
 print("Current User Name: ", userName)
@@ -15,9 +21,26 @@ print("Current User Id: ", userId)
 
 # COMMAND ----------
 
+# DBTITLE 1,Current User Agent
+userAgent = dbutils.entry_point.getDbutils().notebook().getContext().tags().get("userAgent").get()
+print("Current User Agent: ", userAgent)
+
+# COMMAND ----------
+
 # MAGIC %md
 # MAGIC ## Current Workspace
 # MAGIC ---
+
+# COMMAND ----------
+
+# DBTITLE 1,UC Enabled
+# Is UC Enabled
+ucEnabled = spark.conf.get("spark.databricks.unityCatalog.enabled")
+print("Unity Catalog Enabled: ", ucEnabled)
+
+# Current Metastore
+currentMetastore = spark.sql("SELECT CURRENT_METASTORE()").first()[0]
+print("Current metastore: ", currentMetastore)
 
 # COMMAND ----------
 
@@ -35,6 +58,13 @@ print("Workspace URL: ", workspaceUrl)
 # MAGIC %md
 # MAGIC ## Current Cluster
 # MAGIC ---
+
+# COMMAND ----------
+
+# DBTITLE 1,Cloud Info
+# Get the current region
+region = spark.conf.get("spark.databricks.clusterUsageTags.region")
+print("Region: ", region)
 
 # COMMAND ----------
 
